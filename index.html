@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OA Fellows Curriculum | Goodwill Network</title>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ── */
+:root {
+  --navy:  #194F90;
+  --mid:   #1a6faf;
+  --teal:  #49C5CD;
+  --red:   #df4e61;
+  --pale:  #eef5fb;
+  --cream: #f5f6f7;
+  --dark:  #231f20;
+  --gray:  #515b5a;
+  --lgray: #e6e7e8;
+  --white: #ffffff;
+}
+
+/* ── RESET ── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Work Sans',sans-serif; background:var(--cream); color:var(--dark); overflow-x:hidden; line-height:1.5; }
+a { text-decoration:none; }
+img { max-width:100%; }
+
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(25,79,144,0.97); backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  height:60px; padding:0 40px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.nav-logo { font-size:1rem; font-weight:700; color:#fff; letter-spacing:0.02em; }
+.nav-logo span { color:var(--teal); }
+.nav-links { display:flex; gap:24px; list-style:none; }
+.nav-links a { color:rgba(255,255,255,0.7); font-size:0.73rem; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; transition:color 0.2s; }
+.nav-links a:hover { color:var(--teal); }
+.hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:8px; min-width:44px; min-height:44px; justify-content:center; align-items:center; }
+.hamburger span { display:block; width:20px; height:2px; background:#fff; transition:all 0.3s; border-radius:1px; }
+.hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity:0; }
+.hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+/* ── MOBILE MENU ── */
+.mobile-menu {
+  display:none; position:fixed; top:60px; left:0; right:0;
+  background:rgba(20,55,105,0.98); z-index:99;
+  flex-direction:column; padding:8px 0;
+  border-bottom:2px solid var(--teal);
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
+}
+.mobile-menu.open { display:flex; }
+.mobile-menu a {
+  color:rgba(255,255,255,0.85); font-size:0.88rem; font-weight:500;
+  padding:13px 28px; border-bottom:1px solid rgba(255,255,255,0.07);
+  transition:all 0.15s;
+}
+.mobile-menu a:hover { background:rgba(73,197,205,0.1); color:var(--teal); padding-left:36px; }
+
+/* ── HERO ── */
+.hero {
+  min-height:100vh; background:var(--navy);
+  position:relative; overflow:hidden;
+  display:flex; align-items:center;
+}
+.hero-bg {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 55% 70% at 80% 40%, rgba(73,197,205,0.15) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 50% at 10% 80%, rgba(223,78,97,0.08) 0%, transparent 60%);
+}
+.hero-grid {
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size:64px 64px;
+}
+.hero-content {
+  position:relative; z-index:2;
+  max-width:760px; padding:140px 60px 80px;
+}
+.eyebrow {
+  font-family:'DM Mono',monospace; font-size:0.68rem; color:var(--teal);
+  letter-spacing:0.22em; text-transform:uppercase;
+  margin-bottom:22px; display:flex; align-items:center; gap:12px;
+}
+.eyebrow::before { content:''; display:block; width:28px; height:1px; background:var(--teal); }
+.hero-title { font-size:clamp(2.6rem,5.5vw,4.4rem); font-weight:900; color:#fff; line-height:1.05; margin-bottom:24px; }
+.hero-title em { font-style:normal; color:var(--teal); }
+.hero-sub { font-size:1.05rem; color:rgba(255,255,255,0.62); line-height:1.75; max-width:560px; margin-bottom:44px; font-weight:300; }
+.cta-row { display:flex; gap:14px; flex-wrap:wrap; }
+.btn-primary {
+  background:var(--red); color:#fff; border:none;
+  padding:13px 26px; font-family:'Work Sans',sans-serif;
+  font-size:0.8rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+  cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
+  min-height:46px; transition:background 0.2s;
+}
+.btn-primary:hover { background:#c23a50; }
+.btn-ghost {
+  background:transparent; color:rgba(255,255,255,0.8);
+  border:1px solid rgba(255,255,255,0.28); padding:13px 26px;
+  font-family:'Work Sans',sans-serif; font-size:0.8rem; font-weight:500;
+  letter-spacing:0.06em; text-transform:uppercase; cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center;
+  min-height:46px; transition:all 0.2s;
+}
+.btn-ghost:hover { border-color:var(--teal); color:var(--teal); }
+
+/* ── SECTION SHARED ── */
+.section-light { background:var(--white); padding:88px 0; }
+.section-cream { background:var(--cream); padding:88px 0; }
+.section-navy  { background:var(--navy); padding:88px 0; }
+.container { max-width:1160px; margin:0 auto; padding:0 48px; }
+.sec-eyebrow {
+  font-family:'DM Mono',monospace; font-size:0.67rem; color:var(--teal);
+  letter-spacing:0.22em; text-transform:uppercase;
+  margin-bottom:12px; display:flex; align-items:center; gap:10px;
+}
+.sec-eyebrow::before { content:''; display:block; width:22px; height:1px; background:var(--teal); flex-shrink:0; }
+.sec-eyebrow.on-navy { color:var(--teal); }
+.sec-title { font-size:clamp(1.75rem,3vw,2.5rem); font-weight:800; color:var(--navy); line-height:1.15; margin-bottom:14px; }
+.sec-title.on-navy { color:#fff; }
+.sec-rule { height:1px; background:rgba(25,79,144,0.12); margin:18px 0 44px; }
+.sec-rule.on-navy { background:rgba(255,255,255,0.12); }
+.sec-lead { font-size:0.97rem; color:var(--gray); line-height:1.78; max-width:620px; }
+.sec-lead.on-navy { color:rgba(255,255,255,0.55); }
+
+/* ── PROBLEM ── */
+.problem-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+.pull-quote { font-size:clamp(1.1rem,2vw,1.5rem); font-weight:700; color:var(--navy); line-height:1.45; border-left:4px solid var(--teal); padding-left:22px; margin-bottom:24px; }
+.problem-body p { font-size:0.94rem; color:#444; line-height:1.82; margin-bottom:16px; }
+.problem-body p:last-child { margin-bottom:0; }
+.problem-body strong { color:var(--navy); font-weight:600; }
+
+/* ── BY THE NUMBERS ── */
+.numbers-grid { display:grid; grid-template-columns:1fr 1fr; gap:56px; margin-top:44px; align-items:start; }
+.col-head { font-size:1.45rem; font-weight:700; color:#fff; margin-bottom:22px; line-height:1.3; }
+.nstats { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.nstat {
+  background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
+  padding:22px 18px;
+}
+.nstat.t { border-top:3px solid var(--teal); }
+.nstat.r { border-top:3px solid var(--red); }
+.nstat-num { font-size:2.5rem; font-weight:900; color:#fff; line-height:1; }
+.nstat-label { font-size:0.71rem; color:rgba(255,255,255,0.52); margin-top:7px; text-transform:uppercase; letter-spacing:0.06em; line-height:1.45; }
+.dates { display:flex; flex-direction:column; }
+.date-row { display:grid; grid-template-columns:74px 1fr; gap:14px; align-items:center; padding:16px 0; border-bottom:1px solid rgba(255,255,255,0.09); }
+.date-badge { font-size:0.6rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:5px 8px; color:#fff; display:block; text-align:center; }
+.dt { background:var(--teal); }
+.dn { background:var(--red); }
+.de { background:rgba(255,255,255,0.14); color:rgba(255,255,255,0.75); }
+.date-title { font-size:0.93rem; font-weight:700; color:#fff; }
+.date-sub { font-size:0.8rem; color:rgba(255,255,255,0.5); margin-top:3px; }
+.date-note { padding:16px 0; font-size:0.79rem; color:rgba(255,255,255,0.35); line-height:1.65; }
+
+/* ── GOALS ── */
+.goals-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:8px; }
+.goal-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); padding:34px 30px; transition:all 0.25s; }
+.goal-card:hover { background:rgba(255,255,255,0.08); border-color:rgba(73,197,205,0.35); }
+.goal-letter { font-size:2.8rem; font-weight:900; color:rgba(73,197,205,0.22); line-height:1; margin-bottom:12px; transition:color 0.25s; }
+.goal-card:hover .goal-letter { color:rgba(73,197,205,0.65); }
+.goal-title { font-size:0.95rem; font-weight:700; color:#fff; margin-bottom:9px; }
+.goal-desc { font-size:0.84rem; color:rgba(255,255,255,0.52); line-height:1.75; }
+
+/* ── PHASES ── */
+.phases { display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:8px; }
+.phase { background:var(--white); border:1px solid rgba(0,0,0,0.08); padding:34px 26px; transition:all 0.25s; }
+.phase:hover { box-shadow:0 8px 32px rgba(25,79,144,0.13); transform:translateY(-3px); position:relative; z-index:2; }
+.phase-tag { font-family:'DM Mono',monospace; font-size:0.63rem; color:var(--teal); letter-spacing:0.14em; text-transform:uppercase; margin-bottom:14px; }
+.phase-name { font-size:1.1rem; font-weight:800; color:var(--navy); margin-bottom:4px; }
+.phase-weeks { font-size:0.76rem; color:var(--mid); font-style:italic; font-weight:500; margin-bottom:20px; }
+.phase-list { list-style:none; }
+.phase-list li { font-size:0.82rem; color:var(--gray); padding:5px 0; border-top:1px solid rgba(0,0,0,0.05); display:flex; gap:9px; line-height:1.5; }
+.phase-list li::before { content:'—'; color:var(--teal); flex-shrink:0; font-size:0.72rem; margin-top:1px; }
+
+/* ── WEEKS ── */
+.week-filters { display:flex; gap:7px; margin:36px 0 24px; flex-wrap:wrap; }
+.fbtn { padding:7px 16px; border:1px solid rgba(0,0,0,0.15); background:transparent; font-family:'Work Sans',sans-serif; font-size:0.73rem; font-weight:600; color:var(--gray); cursor:pointer; letter-spacing:0.04em; text-transform:uppercase; transition:all 0.18s; min-height:38px; }
+.fbtn:hover, .fbtn.active { background:var(--navy); border-color:var(--navy); color:#fff; }
+.weeks-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.week-card { background:var(--cream); border:1px solid rgba(0,0,0,0.09); cursor:pointer; transition:all 0.2s; }
+.week-card:hover { border-color:var(--navy); box-shadow:0 4px 18px rgba(25,79,144,0.11); transform:translateY(-2px); }
+.week-card.has-book { border-left:3px solid var(--teal); }
+.wk-header { padding:16px 18px 12px; display:flex; gap:10px; align-items:flex-start; }
+.wk-num { font-family:'DM Mono',monospace; font-size:0.62rem; color:var(--mid); background:var(--pale); padding:3px 7px; flex-shrink:0; margin-top:2px; }
+.wk-title { font-size:0.88rem; font-weight:700; color:var(--navy); line-height:1.35; }
+.wk-body { padding:0 18px 16px; }
+.wk-desc { font-size:0.78rem; color:var(--gray); line-height:1.65; margin-bottom:10px; }
+.wk-tags { display:flex; gap:5px; flex-wrap:wrap; }
+.tag { font-size:0.62rem; padding:2px 8px; letter-spacing:0.04em; text-transform:uppercase; font-weight:600; }
+.tag-gf   { background:rgba(73,197,205,0.12); color:#1a8f96; border:1px solid rgba(73,197,205,0.28); }
+.tag-phase{ background:var(--pale); color:var(--navy); border:1px solid rgba(25,79,144,0.18); }
+.tag-cap  { background:rgba(25,79,144,0.08); color:var(--navy); border:1px solid rgba(25,79,144,0.18); }
+.tag-sda  { background:rgba(97,140,61,0.1); color:#3d6020; border:1px solid rgba(97,140,61,0.25); }
+
+/* ── BOOK SECTION ── */
+.book-grid { display:grid; grid-template-columns:1fr 1.5fr; gap:56px; align-items:start; margin-top:8px; position:relative; z-index:2; }
+.book-card { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); padding:32px 28px; position:relative; }
+.book-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--teal),var(--mid)); }
+.book-badge { font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--teal); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:16px; }
+.book-title { font-size:1.65rem; font-weight:900; color:#fff; line-height:1.12; margin-bottom:6px; }
+.book-subtitle { font-size:0.79rem; color:rgba(255,255,255,0.4); line-height:1.5; margin-bottom:20px; }
+.book-rule { height:1px; background:rgba(255,255,255,0.1); margin:18px 0; }
+.book-meta-group { margin-bottom:15px; }
+.book-meta-group strong { display:block; font-size:0.69rem; font-weight:700; color:var(--teal); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:4px; }
+.book-meta-group p, .book-meta-group span { font-size:0.82rem; color:rgba(255,255,255,0.5); line-height:1.7; }
+.book-meta-group em { font-style:italic; }
+.ch-list { list-style:none; }
+.ch-item { border-bottom:1px solid rgba(255,255,255,0.08); padding:15px 0; display:grid; grid-template-columns:44px 1fr auto; gap:12px; align-items:start; }
+.ch-item:first-child { padding-top:0; }
+.ch-num { font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--teal); padding-top:3px; }
+.ch-title { font-size:0.87rem; font-weight:600; color:#fff; margin-bottom:3px; line-height:1.3; }
+.ch-sub { font-size:0.74rem; color:rgba(255,255,255,0.4); line-height:1.5; }
+.ch-week { font-family:'DM Mono',monospace; font-size:0.59rem; color:var(--mid); background:rgba(73,197,205,0.1); padding:3px 7px; white-space:nowrap; margin-top:2px; }
+
+/* ── COMPETENCIES ── */
+.comp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:8px; }
+.comp-card { background:var(--white); border:1px solid rgba(0,0,0,0.08); padding:26px 22px; transition:all 0.25s; position:relative; overflow:hidden; }
+.comp-card:hover { border-color:var(--navy); box-shadow:0 6px 24px rgba(25,79,144,0.1); transform:translateY(-2px); }
+.comp-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--navy),var(--teal)); transform:scaleX(0); transform-origin:left; transition:transform 0.25s; }
+.comp-card:hover::after { transform:scaleX(1); }
+.comp-icon { width:36px; height:36px; background:var(--pale); display:flex; align-items:center; justify-content:center; margin-bottom:14px; font-size:0.95rem; color:var(--teal); }
+.comp-title { font-size:0.9rem; font-weight:700; color:var(--navy); margin-bottom:8px; }
+.comp-desc { font-size:0.8rem; color:var(--gray); line-height:1.7; }
+
+/* ── FOOTER ── */
+footer { background:#0c1c34; padding:56px 0 32px; }
+.footer-grid { display:grid; grid-template-columns:1.6fr 1fr; gap:64px; align-items:start; }
+.footer-brand { font-size:1.1rem; font-weight:700; color:#fff; margin-bottom:12px; }
+.footer-brand span { color:var(--teal); }
+.footer-desc { font-size:0.82rem; color:rgba(255,255,255,0.38); line-height:1.75; max-width:360px; }
+.footer-nav-label { font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--teal); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:14px; }
+.footer-links { list-style:none; }
+.footer-links li { padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+.footer-links a { font-size:0.82rem; color:rgba(255,255,255,0.48); transition:color 0.2s; }
+.footer-links a:hover { color:var(--teal); }
+.footer-bottom { margin-top:32px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.07); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; }
+.footer-copy { font-size:0.74rem; color:rgba(255,255,255,0.22); }
+
+/* ── MODAL ── */
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(10,20,40,0.72); z-index:200; backdrop-filter:blur(4px); align-items:center; justify-content:center; padding:40px; }
+.modal-overlay.open { display:flex; }
+.modal { background:#fff; max-width:680px; width:100%; max-height:84vh; overflow-y:auto; animation:mIn 0.22s ease; }
+@keyframes mIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+.modal-hd { background:var(--navy); padding:26px 30px; position:sticky; top:0; z-index:1; }
+.modal-wk { font-family:'DM Mono',monospace; font-size:0.62rem; color:var(--teal); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:5px; }
+.modal-title { font-size:1.3rem; font-weight:800; color:#fff; line-height:1.2; }
+.modal-close { position:absolute; top:16px; right:20px; background:rgba(255,255,255,0.1); border:none; color:#fff; font-size:1rem; cursor:pointer; width:30px; height:30px; display:flex; align-items:center; justify-content:center; transition:background 0.2s; }
+.modal-close:hover { background:rgba(255,255,255,0.22); }
+.modal-body { padding:26px 30px; }
+.modal-sec { margin-bottom:22px; }
+.modal-sec-label { font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--teal); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:8px; }
+.modal-sec p { font-size:0.87rem; color:#444; line-height:1.77; }
+.modal-book-banner { background:rgba(73,197,205,0.06); border:1px solid rgba(73,197,205,0.2); border-left:3px solid var(--teal); padding:14px 16px; margin-bottom:22px; }
+.modal-book-label { font-size:0.62rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.15em; font-family:'DM Mono',monospace; margin-bottom:4px; }
+.modal-book-title { font-size:0.88rem; font-weight:700; color:var(--navy); margin-bottom:6px; }
+.modal-book-desc { font-size:0.81rem; color:#555; line-height:1.65; }
+.modal-acts { list-style:none; }
+.modal-acts li { font-size:0.85rem; color:#444; padding:6px 0; border-bottom:1px solid rgba(0,0,0,0.06); display:flex; gap:9px; line-height:1.5; }
+.modal-acts li::before { content:'→'; color:var(--teal); flex-shrink:0; }
+.modal-comps { display:flex; gap:6px; flex-wrap:wrap; }
+.comp-pill { font-size:0.72rem; padding:4px 10px; background:var(--pale); color:var(--navy); border:1px solid rgba(25,79,144,0.16); font-weight:500; }
+.modal-sda { background:var(--pale); border-top:2px solid var(--teal); padding:18px 20px; margin:0 -30px -26px; }
+.modal-sda .modal-sec-label { color:var(--navy); }
+.sda-list { display:flex; flex-direction:column; gap:7px; margin-top:4px; }
+.sda-row { display:flex; align-items:center; gap:12px; background:#fff; border:1px solid rgba(25,79,144,0.12); padding:8px 12px; }
+.sda-num { background:var(--navy); color:#fff; font-size:0.65rem; font-weight:800; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'DM Mono',monospace; }
+.sda-name { font-size:0.84rem; font-weight:600; color:var(--dark); line-height:1.3; }
+
+/* ── FADE-IN ── */
+.fade { opacity:0; transform:translateY(20px); transition:all 0.55s ease; }
+.fade.vis { opacity:1; transform:translateY(0); }
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+
+/* Tablet */
+@media (max-width:960px) {
+  nav { padding:0 20px; }
+  .nav-links { display:none; }
+  .hamburger { display:flex; }
+  .hero-content { padding:110px 32px 60px; }
+  .container { padding:0 24px; }
+  .section-light, .section-cream, .section-navy { padding:64px 0; }
+  .problem-grid { grid-template-columns:1fr; gap:32px; }
+  .numbers-grid { grid-template-columns:1fr; gap:40px; }
+  .goals-grid { grid-template-columns:1fr; gap:2px; }
+  .phases { grid-template-columns:1fr; }
+  .weeks-grid { grid-template-columns:1fr 1fr; gap:10px; }
+  .book-grid { grid-template-columns:1fr; gap:32px; }
+  .comp-grid { grid-template-columns:1fr 1fr; gap:10px; }
+  .footer-grid { grid-template-columns:1fr; gap:32px; }
+  .modal-overlay { padding:20px; }
+  .ch-week { display:none; }
+}
+
+/* Mobile */
+@media (max-width:600px) {
+  nav { padding:0 16px; }
+  .hero-content { padding:90px 20px 48px; }
+  .hero-title { font-size:2.4rem; }
+  .hero-sub { font-size:0.95rem; }
+  .cta-row { flex-direction:column; gap:10px; }
+  .btn-primary, .btn-ghost { width:100%; text-align:center; }
+  .container { padding:0 16px; }
+  .section-light, .section-cream, .section-navy { padding:52px 0; }
+  .sec-title { font-size:1.7rem; }
+  .pull-quote { font-size:1.05rem; }
+  .nstats { grid-template-columns:1fr 1fr; }
+  .nstat-num { font-size:2rem; }
+  .nstat { padding:16px 14px; }
+  .col-head { font-size:1.15rem; }
+  .date-row { grid-template-columns:62px 1fr; gap:10px; }
+  .goals-grid { gap:2px; }
+  .goal-card { padding:26px 22px; }
+  .goal-letter { font-size:2.4rem; }
+  .phase { padding:26px 20px; }
+  .weeks-grid { grid-template-columns:1fr; }
+  .week-filters { gap:5px; }
+  .fbtn { font-size:0.68rem; padding:6px 10px; }
+  .comp-grid { grid-template-columns:1fr; }
+  .comp-card { padding:22px 18px; }
+  .book-card { padding:26px 22px; }
+  .book-title { font-size:1.4rem; }
+  .footer-bottom { flex-direction:column; text-align:center; gap:4px; }
+  .modal-overlay { padding:0; align-items:flex-end; }
+  .modal { max-height:90vh; max-width:100%; }
+  .modal-hd { padding:20px; }
+  .modal-body { padding:20px; }
+  .modal-sda { margin:0 -20px -20px; padding:16px; }
+}
+
+/* Small phones */
+@media (max-width:380px) {
+  .hero-title { font-size:2rem; }
+  .nstats { grid-template-columns:1fr; }
+  .nstat-num { font-size:1.8rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">OA <span>Fellows</span></div>
+  <button class="hamburger" id="ham" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#numbers">By the Numbers</a></li>
+    <li><a href="#goals">Goals</a></li>
+    <li><a href="#curriculum">Curriculum</a></li>
+    <li><a href="#weeks">Weekly Topics</a></li>
+    <li><a href="#book">Growing Fairly</a></li>
+    <li><a href="#competencies">Competencies</a></li>
+  </ul>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#overview"     onclick="closeMenu()">Overview</a>
+  <a href="#numbers"      onclick="closeMenu()">By the Numbers</a>
+  <a href="#goals"        onclick="closeMenu()">Goals</a>
+  <a href="#curriculum"   onclick="closeMenu()">Curriculum</a>
+  <a href="#weeks"        onclick="closeMenu()">Weekly Topics</a>
+  <a href="#book"         onclick="closeMenu()">Growing Fairly</a>
+  <a href="#competencies" onclick="closeMenu()">Competencies</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="eyebrow">Goodwill Network · Workforce Leadership</div>
+    <h1 class="hero-title">Opportunity<br>Accelerator<br><em>Fellows</em></h1>
+    <p class="hero-sub">An 18-week cohort-based leadership program building the systems thinkers, equity designers, and disciplined executors that equitable workforce development requires.</p>
+    <div class="cta-row">
+      <a href="#curriculum" class="btn-primary">Explore the Curriculum</a>
+      <a href="#weeks"      class="btn-ghost">Week by Week</a>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW / PROBLEM -->
+<section class="section-light" id="overview">
+  <div class="container">
+    <div class="sec-eyebrow">Context</div>
+    <h2 class="sec-title">Why This Program Exists</h2>
+    <div class="sec-rule"></div>
+    <div class="problem-grid fade">
+      <div>
+        <div class="pull-quote">"Equitable workforce outcomes require more than good programs — they require well-prepared leaders."</div>
+        <p style="font-size:0.87rem;color:var(--gray);line-height:1.75;">The OA Fellows Curriculum was designed to address a specific gap: workforce professionals who understand their communities deeply but need structured support to lead systems-level change.</p>
+      </div>
+      <div class="problem-body">
+        <p>Workforce systems across the country are navigating real complexity — <strong>shifting labor markets, rising skill demands, and persistent gaps in who benefits from economic growth.</strong> Addressing these conditions requires leaders who can think beyond individual programs.</p>
+        <p>Within the Goodwill network, organizations implementing the Opportunity Accelerator framework need professionals equipped to lead with fidelity, <strong>design with equity</strong>, and execute with the discipline that systemic change demands.</p>
+        <p>That leadership capacity does not develop on its own. <strong>It must be intentionally built.</strong> The OA Fellows Curriculum is that vehicle — an 18-week cohort experience moving fellows from understanding to action, from theory to applied practice, from individual learning to network-wide impact.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BY THE NUMBERS -->
+<section class="section-navy" id="numbers">
+  <div class="container">
+    <div class="sec-eyebrow on-navy">Program at a Glance</div>
+    <h2 class="sec-title on-navy">OA Fellows by the Numbers</h2>
+    <div class="sec-rule on-navy"></div>
+    <div class="numbers-grid fade">
+      <div>
+        <div class="col-head">Fellows. Organizations.<br>Real Network Impact.</div>
+        <div class="nstats">
+          <div class="nstat t">
+            <div class="nstat-num">148</div>
+            <div class="nstat-label">Total OA Fellows Trained</div>
+          </div>
+          <div class="nstat t">
+            <div class="nstat-num">56</div>
+            <div class="nstat-label">Goodwill Organizations Represented</div>
+          </div>
+          <div class="nstat r">
+            <div class="nstat-num">94</div>
+            <div class="nstat-label">Organizations Not Yet Represented</div>
+          </div>
+          <div class="nstat t">
+            <div class="nstat-num">90%+</div>
+            <div class="nstat-label">Average Cohort Attendance Rate</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="col-head">Upcoming<br>Key Dates</div>
+        <div class="dates">
+          <div class="date-row">
+            <span class="date-badge dt">Current</span>
+            <div>
+              <div class="date-title">Cohort 9</div>
+              <div class="date-sub">January 8 – June 9, 2026</div>
+            </div>
+          </div>
+          <div class="date-row">
+            <span class="date-badge dn">Next</span>
+            <div>
+              <div class="date-title">Cohort 10 Begins</div>
+              <div class="date-sub">July 7, 2026</div>
+            </div>
+          </div>
+          <div class="date-row">
+            <span class="date-badge de">Event</span>
+            <div>
+              <div class="date-title">Learn and Lead Lab</div>
+              <div class="date-sub">April 7–9, 2026 · Louisville, KY</div>
+            </div>
+          </div>
+          <div class="date-note">The OA Fellows program runs in cohorts throughout the year. Each cohort follows the full 18-week curriculum and culminates in a capstone project and graduation.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GOALS -->
+<section class="section-navy" id="goals" style="padding-top:0;">
+  <div class="container">
+    <div class="sec-eyebrow on-navy">Program Goals</div>
+    <h2 class="sec-title on-navy">What the Program Sets Out to Achieve</h2>
+    <div class="sec-rule on-navy"></div>
+    <div class="goals-grid fade">
+      <div class="goal-card">
+        <div class="goal-letter">A</div>
+        <div class="goal-title">Develop Systems-Level Leadership</div>
+        <div class="goal-desc">Equip workforce professionals with the frameworks, language, and analytical skills to understand economic mobility as a systems challenge — and to respond with strategies that are equitable, evidence-based, and community-rooted.</div>
+      </div>
+      <div class="goal-card">
+        <div class="goal-letter">B</div>
+        <div class="goal-title">Build Organizational Implementation Capacity</div>
+        <div class="goal-desc">Prepare fellows to implement the OA framework with fidelity inside their organizations — applying diagnostic tools, designing human-centered programs, and driving quality improvement through evidence and accountability.</div>
+      </div>
+      <div class="goal-card">
+        <div class="goal-letter">C</div>
+        <div class="goal-title">Strengthen Network Cohesion</div>
+        <div class="goal-desc">Build a cohort of leaders across Goodwill Industries International who share a common framework and standard for equitable workforce practice — enabling coordination, peer learning, and collective impact across the network.</div>
+      </div>
+      <div class="goal-card">
+        <div class="goal-letter">D</div>
+        <div class="goal-title">Connect Learning to Real Organizational Impact</div>
+        <div class="goal-desc">Ensure every competency fellows develop is applied — not just studied. Through progressive skill-building and a capstone project, fellows deliver tangible value back to their organizations as part of the program itself.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section class="section-cream" id="curriculum">
+  <div class="container">
+    <div class="sec-eyebrow">Curriculum Architecture</div>
+    <h2 class="sec-title">Three Phases of the OA Framework</h2>
+    <div class="sec-rule"></div>
+    <p class="sec-lead">The curriculum is organized around the three phases of the Opportunity Accelerator model, each building on the last — moving fellows from understanding to application to synthesis.</p>
+    <div class="phases fade" style="margin-top:36px;">
+      <div class="phase">
+        <div class="phase-tag">Phase 01</div>
+        <div class="phase-name">Assess &amp; Plan</div>
+        <div class="phase-weeks">Weeks 1–5</div>
+        <ul class="phase-list">
+          <li>Economic mobility &amp; equity systems framing</li>
+          <li>OA model fluency &amp; fidelity assessment</li>
+          <li>Community needs assessment design</li>
+          <li>Person-centered individual assessment</li>
+          <li>Stakeholder engagement as equity practice</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-tag">Phase 02</div>
+        <div class="phase-name">Equip &amp; Connect</div>
+        <div class="phase-weeks">Weeks 6–12</div>
+        <ul class="phase-list">
+          <li>Career navigation &amp; coaching practice</li>
+          <li>Wrap-around and stabilization supports</li>
+          <li>Foundational &amp; occupational skills design</li>
+          <li>Credentials, digital wallets &amp; skills-based hiring</li>
+          <li>Employer engagement &amp; job quality strategy</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="phase-tag">Phase 03</div>
+        <div class="phase-name">Launch &amp; Evaluate</div>
+        <div class="phase-weeks">Weeks 13–18</div>
+        <ul class="phase-list">
+          <li>Post-placement support &amp; retention strategy</li>
+          <li>Strategic evaluation &amp; logic model application</li>
+          <li>Employer partnership for advancement</li>
+          <li>Capstone project development &amp; refinement</li>
+          <li>Demonstrated competency integration</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WEEKS -->
+<section class="section-light" id="weeks">
+  <div class="container">
+    <div class="sec-eyebrow">Weekly Topics</div>
+    <h2 class="sec-title">Week by Week Breakdown</h2>
+    <div class="sec-rule"></div>
+    <p class="sec-lead">Click any week to see the full overview, activities, <em>Growing Fairly</em> connection, competencies, and OA Service Delivery Areas. Weeks with a teal left border integrate a chapter from <em>Growing Fairly</em>.</p>
+    <div class="week-filters">
+      <button class="fbtn active" onclick="filterWeeks('all',this)">All Weeks</button>
+      <button class="fbtn" onclick="filterWeeks('assess',this)">Assess &amp; Plan</button>
+      <button class="fbtn" onclick="filterWeeks('equip',this)">Equip &amp; Connect</button>
+      <button class="fbtn" onclick="filterWeeks('launch',this)">Launch &amp; Evaluate</button>
+      <button class="fbtn" onclick="filterWeeks('book',this)">Growing Fairly</button>
+    </div>
+    <div class="weeks-grid" id="weeksGrid"></div>
+  </div>
+</section>
+
+<!-- GROWING FAIRLY -->
+<section class="section-navy" id="book" style="position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 85% 50%,rgba(73,197,205,0.1) 0%,transparent 70%);pointer-events:none;"></div>
+  <div class="container">
+    <div class="sec-eyebrow on-navy">The Book Behind the Curriculum</div>
+    <h2 class="sec-title on-navy">Growing Fairly</h2>
+    <div class="sec-rule on-navy"></div>
+    <p class="sec-lead on-navy" style="margin-bottom:40px;">The curriculum is grounded in <em>Growing Fairly: How to Build Opportunity and Equity in Workforce Development</em> — a 2022 Brookings Institution Press book by Stephen Goldsmith and Kate Markin Coleman. Written by practitioners for practitioners, it sets out ten principles for designing a more effective and equitable workforce system. Eight chapters are integrated across the 18 weeks as active design lenses, not background reading.</p>
+    <div class="book-grid fade">
+      <div class="book-card">
+        <div class="book-badge">Core Text</div>
+        <div class="book-title">Growing Fairly</div>
+        <div class="book-subtitle">How to Build Opportunity and Equity in Workforce Development</div>
+        <div class="book-rule"></div>
+        <div class="book-meta-group"><strong>Authors</strong><span>Stephen Goldsmith &amp; Kate Markin Coleman</span></div>
+        <div class="book-meta-group"><strong>Publisher</strong><span>Brookings Institution Press</span></div>
+        <div class="book-meta-group"><strong>Published</strong><span>February 22, 2022</span></div>
+        <div class="book-meta-group"><strong>About the Book</strong><p>The U.S. labor market faces a contradictory challenge: employers struggle to find qualified applicants while millions remain out of work or underemployed. <em>Growing Fairly</em> offers reforms that meet the needs of both workers and employers — arguing for skill-based hiring, distributed performance data, and cross-sector collaboration. Its take is optimistic. Written by practitioners for practitioners.</p></div>
+        <div class="book-meta-group"><strong>Authors</strong>
+          <p><span style="color:rgba(255,255,255,0.65);font-weight:600;">Stephen Goldsmith</span> — Derek Bok Professor at Harvard's Kennedy School of Government; former mayor of Indianapolis and deputy mayor of New York City.</p>
+          <p style="margin-top:8px;"><span style="color:rgba(255,255,255,0.65);font-weight:600;">Kate Markin Coleman</span> — Principal of IAS Advising, LLC; former EVP and Chief Strategy Officer of YMCA of the USA.</p>
+        </div>
+        <div class="book-meta-group"><strong>How It's Used</strong><p>Each chapter is integrated as a design lens — asking fellows to apply the book's evidence and frameworks directly to their own organizations and communities. The book moves from theory to tool across all 18 weeks.</p></div>
+      </div>
+      <ul class="ch-list" id="chapterList"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETENCIES -->
+<section class="section-cream" id="competencies">
+  <div class="container">
+    <div class="sec-eyebrow">Learning Objectives</div>
+    <h2 class="sec-title">What Fellows Are Equipped To Do</h2>
+    <div class="sec-rule"></div>
+    <p class="sec-lead">Fellows graduate with demonstrated competency across 12 leadership domains — applied to real organizational challenges throughout the program.</p>
+    <div class="comp-grid fade" id="compGrid" style="margin-top:36px;"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">OA <span>Fellows</span> Curriculum</div>
+        <p class="footer-desc">An 18-week cohort-based leadership development program for workforce professionals in the Goodwill network — grounded in the Opportunity Accelerator framework and <em>Growing Fairly</em>.</p>
+      </div>
+      <div>
+        <div class="footer-nav-label">Quick Navigation</div>
+        <ul class="footer-links">
+          <li><a href="#overview">Why This Program Exists</a></li>
+          <li><a href="#numbers">OA Fellows by the Numbers</a></li>
+          <li><a href="#goals">Program Goals</a></li>
+          <li><a href="#curriculum">Curriculum Architecture</a></li>
+          <li><a href="#weeks">Week by Week Topics</a></li>
+          <li><a href="#book">Growing Fairly Integration</a></li>
+          <li><a href="#competencies">Fellow Competencies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">Goodwill Network · Workforce Leadership Development · OA Fellows Curriculum</span>
+      <span class="footer-copy">Grounded in evidence. Designed for equity. Built to last.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalBg(event)">
+  <div class="modal" id="modal">
+    <div class="modal-hd">
+      <div class="modal-wk"  id="modalWk"></div>
+      <div class="modal-title" id="modalTitle"></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+//  DATA
+// ═══════════════════════════════════════════════════
+const weeks = [
+  { num:1, title:"Program Kick-Off & Orientation", phase:"assess", hasBook:false,
+    desc:"Entry point into the OA Fellows identity. Establishes the Fellowship as a cohort-based leadership experience with shared expectations, norms, and responsibilities.",
+    overview:"Week 1 functions as the entry point into the OA Fellows identity — not as a technical learning week. Its primary purpose is to establish the Fellowship as a cohort-based leadership experience with shared expectations, norms, and responsibilities. The 'Desk Show and Tell' activity is intentionally relational, surfacing personal motivation, lived experience, and professional context to set a tone of psychological safety and peer learning.",
+    book:null,
+    activities:["Structured introductions ('Desk Show & Tell')","Program overview and participation expectations","Fellowship norms and role clarity session","Reflection on personal motivation and connection to the work"],
+    competencies:["Adaptive leadership identity","Professional role clarity","Cohort collaboration"],
+    services:[{num:3,name:"OA Fellows Program"}]
+  },
+  { num:2, title:"Economic Mobility & the OA Framework", phase:"assess", hasBook:true,
+    desc:"Conceptual foundation of the entire curriculum. Introduces economic mobility as a systems problem and frames the OA as a response to structural inequity.",
+    overview:"Week 2 is the conceptual foundation of the entire curriculum. It introduces economic mobility as a systems problem — not an individual failing — and explicitly frames the Opportunity Accelerator as a response to structural inequity. Fellows are pushed to locate their own communities within national dynamics through case studies and guided reflection. The Vision Board activity translates abstract concepts into values-driven visions of equitable local systems.",
+    book:{chapter:"Chapter 1 — Introduction",title:"Economic Mobility, Work, and Equity",desc:"Establishes economic mobility as a systems challenge, not an individual failure. Documents how the hollowing of the middle class and the decline of middle-skill jobs trap workers in low-wage trajectories — and how historical policy decisions, segregation, and unequal education access shape who benefits from growth."},
+    activities:["Case discussion on economic mobility dynamics","Vision board creation — equitable community vision","Introduction to the OA model and its three phases","Group sharing and community mapping"],
+    competencies:["Economic mobility systems thinking","Equity-centered reasoning","OA model fluency"],
+    services:[{num:6,name:"Evaluating Impact & Metrics"}]
+  },
+  { num:3, title:"OA Implementation Fidelity", phase:"assess", hasBook:false,
+    desc:"Shifts from why to how well. Fellows are introduced to the OA Fidelity Index and apply it to their own organizations to surface gaps and tensions.",
+    overview:"Week 3 marks a deliberate shift from why to how well. The focus is implementation fidelity: understanding that even strong frameworks fail if applied inconsistently or superficially. Fellows use the OA Fidelity Index to surface gaps, tensions, and tradeoffs in real organizational contexts, then discuss findings with peers. This week reinforces that workforce leadership includes governance, quality assurance, and disciplined execution — not just innovation.",
+    book:null,
+    activities:["OA Fidelity Index tool walkthrough","Breakout scoring sessions applied to real organizations","Peer report-outs on gaps and tensions identified","Reflection on intent vs. appearance in implementation"],
+    competencies:["Diagnostic reasoning","Evidence-based program judgment","Implementation governance"],
+    services:[{num:3,name:"OA Fellows Program"},{num:6,name:"Evaluating Impact & Metrics"}]
+  },
+  { num:4, title:"Community Needs Assessment", phase:"assess", hasBook:true,
+    desc:"Asks the critical question: Are we designing services based on real needs or assumptions? Fellows design a CNA for an assigned organization.",
+    overview:"Week 4 zooms out to the community level and asks a critical question: Are we designing services based on real needs, or assumptions? Fellows work in groups to design a Community Needs Assessment, identifying goals, data needs, stakeholders, and engagement strategies. The requirement to present CNA plans forces fellows to confront equity questions directly — whose voices matter, what data is missing, and how power operates in planning processes.",
+    book:{chapter:"Chapter 2 — Start with People, Offer Meaningful Choices",title:"Human-Centered Design",desc:"Argues that effective workforce systems must be human-centered, accounting for lived experience, trauma, scarcity, and executive functioning challenges. Brain science shows that poverty impairs decision-making capacity and persistence — not motivation. Case examples like Roca and New Moms demonstrate how sustained relationships and relapse-friendly models produce durable outcomes."},
+    activities:["CNA plan design in groups","Stakeholder mapping exercise","Equity analysis: whose voices are missing","Formal CNA presentations to cohort"],
+    competencies:["Community-level systems analysis","Data-informed planning","Collaborative design","Stakeholder engagement"],
+    services:[{num:7,name:"Outreach / Recruitment"},{num:8,name:"Registration / Intake"},{num:11,name:"Individual Career & Financial Plan (ICFP)"}]
+  },
+  { num:5, title:"Assessing Individual Needs", phase:"assess", hasBook:true,
+    desc:"Narrows the lens from communities to individual participants. Assessment is framed as relational rather than transactional, diagnostic rather than bureaucratic.",
+    overview:"Week 5 narrows the lens from communities to individual participants. This week emphasizes that assessment should be relational rather than transactional, diagnostic rather than eligibility-driven, and responsive to real constraints. It sets the foundation for career navigation by reinforcing that good pathways begin with accurate, humane understanding of individual circumstances.",
+    book:{chapter:"Chapter 3 — Listen, Respond, Get Personal",title:"Individualized Service Design",desc:"Emphasizes listening deeply to participants, responding to real constraints, and personalizing pathways rather than standardizing them. Assessment should be relational rather than transactional, diagnostic rather than eligibility-driven. Lays the foundation for career navigation and persistence by grounding service in accurate, humane understanding of individual circumstances."},
+    activities:["Reflection on assessment philosophy","Scenario-based discussions on individual assessment","Introduction to assessment frameworks and tools","Application of person-centered diagnostic approach"],
+    competencies:["Person-centered diagnostic capability","Equity-driven service design","Responsive assessment practice"],
+    services:[{num:9,name:"Assessment Selection"},{num:10,name:"Orientation"},{num:11,name:"Individual Career & Financial Plan (ICFP)"}]
+  },
+  { num:6, title:"Career Navigation", phase:"equip", hasBook:false,
+    desc:"Builds directly on individual assessment by focusing on career navigation as a structured practice, not informal advising.",
+    overview:"Week 6 builds directly on individual assessment by focusing on career navigation as a structured practice, not informal advising. Fellows explore how assessment data can be translated into actionable career strategies that account for goals, barriers, and labor market realities. Tools like JOFI are introduced as inputs into decision-making. The week emphasizes adaptability and judgment, asking fellows to think about how navigation practices support resilience and long-term growth rather than short-term placement.",
+    book:null,
+    activities:["JOFI assessment tool introduction and application","Career strategy development from assessment data","Breakout sessions on participant-centered planning","Career Coach & Navigator Certificate work"],
+    competencies:["Career navigation competency","Coaching judgment","Pathway alignment","Labor market literacy"],
+    services:[{num:9,name:"Assessment Selection"},{num:11,name:"Individual Career & Financial Plan (ICFP)"}]
+  },
+  { num:7, title:"Leading Change", phase:"equip", hasBook:false,
+    desc:"Shifts attention to organizational leadership. Addresses the reality that knowing what to do is not the same as being able to change systems.",
+    overview:"Week 7 shifts attention to organizational leadership. By this point, fellows have a shared equity framework, diagnostic tools, and a clear understanding of the OA model. This week addresses the reality that knowing what to do is not the same as being able to change systems. The focus is on leadership capacity, change dynamics, and influence — preparing fellows to operate as change agents who navigate resistance, alignment, and complexity.",
+    book:null,
+    activities:["Leadership capacity assessment","Change dynamics frameworks","Peer discussion on organizational resistance","Influence and alignment strategy development"],
+    competencies:["Adaptive leadership","Change management","Organizational influence"],
+    services:[{num:1,name:"Functionally Aligned Staffing"},{num:3,name:"OA Fellows Program"}]
+  },
+  { num:8, title:"Wrap-Around Supports", phase:"equip", hasBook:false,
+    desc:"Addresses non-skill barriers that prevent participation and persistence. Housing, transportation, childcare, and stability are framed as integral to workforce outcomes.",
+    overview:"Week 8 enters the Equip & Connect phase in earnest, addressing non-skill barriers that prevent participation and persistence. Housing, transportation, childcare, and stability are framed as integral to workforce outcomes — not ancillary services. This week operationalizes the curriculum's insistence that poverty and instability undermine executive functioning and persistence, and asks fellows to design holistic support systems accordingly.",
+    book:null,
+    activities:["Wrap-around support model analysis","Case discussions on stabilization and persistence","Program reflection on current support structures","Holistic service system design exercise"],
+    competencies:["Holistic service system design","Barrier mitigation strategy","Stabilization support frameworks"],
+    services:[{num:4,name:"Referral & Wraparound Network"},{num:12,name:"Wraparound Supports"}]
+  },
+  { num:9, title:"Foundational Skills & Contextualized Learning", phase:"equip", hasBook:true,
+    desc:"Applies adult learning principles directly to foundational skills programs. Fellows identify where relevance is lost and design contextualized strategies.",
+    overview:"Week 9 is explicitly grounded in Growing Fairly Chapter 5. The chapter's core argument — that adults persist when learning is relevant — is applied directly to foundational skills programs. Fellows analyze literacy, numeracy, and digital skills through the lens of engagement and completion, not remediation. The curriculum asks fellows to identify where relevance is lost and how contextualized learning can reconnect education to real goals. This week reframes foundational skills as strategic levers for equity, not prerequisites to be endured.",
+    book:{chapter:"Chapter 5 — Relevance Drives Persistence",title:"Adult Learning and Program Design",desc:"Makes a clear case that adults persist in education and training when learning is relevant, contextualized, and connected to real goals. Documents how foundational skill gaps — in literacy, numeracy, and digital skills — intersect with time poverty, financial pressure, and family responsibilities. Contextualized learning, integrating academic skills with occupational content, is presented as a proven response."},
+    activities:["Group analysis of foundational skills program data","Contextualized learning design workshop","Action planning for program improvement","OA Guide: Foundational Skills application"],
+    competencies:["Program design for persistence","Adult learning strategy","Contextualized curriculum design"],
+    services:[{num:14,name:"Foundational Skills Training"},{num:15,name:"Digital Skills Training"}]
+  },
+  { num:10, title:"Occupational Skills Training & Career Pathways", phase:"equip", hasBook:true,
+    desc:"Examines how training connects — or fails to connect — to sustainable careers. Fellows design bridges, not dead ends.",
+    overview:"Week 10 draws heavily on Growing Fairly Chapter 6. The focus is on how training connects — or fails to connect — to sustainable careers. Fellows examine work-based learning, social capital, employer engagement, and the tradeoffs participants face between immediate income and long-term advancement. Case examples illustrate that pathways require intentional design, not just training slots. This week positions occupational skills training as part of a broader mobility system, not an endpoint.",
+    book:{chapter:"Chapter 6 — Bridges to Employment",title:"Career Pathways and Training Strategy",desc:"Focuses on how people actually move into sustainable careers, highlighting work-based learning, apprenticeships and internships, social capital, and employer networks. Case studies — including Year Up, i.c.stars, and pre-apprenticeships — demonstrate that structured bridges, not isolated training, produce mobility. Tradeoffs between immediate income and long-term advancement are addressed directly."},
+    activities:["Case analysis of pathway models (Year Up, i.c.stars)","Pathway design exercise","Employer engagement strategy development","OA Guide: Occupational Skills Training application"],
+    competencies:["Career pathway design","Employer-aligned training strategy","Work-based learning design"],
+    services:[{num:16,name:"Occupation-Specific Training"},{num:17,name:"Career Exploration Opportunities"}]
+  },
+  { num:11, title:"Credentials, Digital Wallets & Skills-Based Hiring", phase:"equip", hasBook:true,
+    desc:"Fellows explore how credentials and digital wallets can support skills-based hiring — and how poorly designed systems can reproduce inequity.",
+    overview:"Week 11 is anchored in Growing Fairly Chapter 7. Fellows explore how credentials, digital wallets, and Learning & Employment Records can support skills-based hiring — and how poorly designed systems can reproduce inequity rather than reduce it. Activities emphasize system integration and stakeholder alignment rather than technology adoption for its own sake. This week reinforces that innovation without equity design is not progress.",
+    book:{chapter:"Chapter 7 — Skills as Currency",title:"Skills-Based Workforce System Design",desc:"Reframes skills — not degrees — as the currency of the labor market. Addresses skills-based hiring, stackable credentials, and the transparency and portability of skills through digital wallets and Learning & Employment Records (LERs). Emphasizes that without intentional equity design, new credentialing tools can replicate — rather than reduce — inequity."},
+    activities:["Stakeholder role-play on credential systems","Digital wallet and LER system design","Skills-based hiring equity analysis","OA Guides: Credentials & Digital Wallets application"],
+    competencies:["Skills-based workforce system design","Labor-market innovation","Credential pathway architecture"],
+    services:[{num:2,name:"Career Coach & Navigator Certificate"},{num:16,name:"Occupation-Specific Training"}]
+  },
+  { num:12, title:"Strategic Evaluation & Logic Models", phase:"equip", hasBook:true,
+    desc:"Reframes evaluation as a leadership responsibility and a learning tool. Fellows work hands-on with the OA Logic Model and evaluation metrics.",
+    overview:"Week 12 is grounded in Growing Fairly Chapter 8. The chapter's emphasis on outcomes, logic models, and accountability informs hands-on work with the OA Logic Model and evaluation metrics. Fellows distinguish outputs from outcomes and assess how measurement shapes decision-making. This week reframes evaluation as a leadership responsibility, a learning tool, and a mechanism for trust.",
+    book:{chapter:"Chapter 8 — Commit to Transparency",title:"Measurement, Accountability, and Learning Systems",desc:"Centers on evaluation as a moral and strategic responsibility — not a compliance exercise. Distinguishes outputs from outcomes, emphasizes logic models as planning and accountability tools, and argues that transparent reporting builds trust and drives improvement. Connects measurement directly to leadership decision-making and organizational learning."},
+    activities:["OA Logic Model hands-on application","Current metrics assessment and gap identification","Outcome vs. output distinction exercises","Capstone connection: evaluation design"],
+    competencies:["Strategic evaluation","Evidence-based leadership","Accountability and learning systems"],
+    services:[{num:6,name:"Evaluating Impact & Metrics"}]
+  },
+  { num:13, title:"Employer Engagement & Job Quality", phase:"launch", hasBook:false,
+    desc:"Focuses on demand-side strategy — how employers shape outcomes and how workforce systems can influence job quality.",
+    overview:"Week 13 extends earlier work on pathways and skills-based systems to focus on employer engagement and job quality as a demand-side strategy. The emphasis is on how employers shape outcomes and how workforce systems can actively influence job quality — not just fill positions. Fellows develop strategies for building partnerships that move beyond transactional placement into sustained collaboration.",
+    book:null,
+    activities:["Employer engagement strategy design","Job quality framework analysis","Group discussion on demand-side partnership models","Employer engagement frameworks application"],
+    competencies:["Demand-side partnership capability","Job quality strategy","Employer relationship management"],
+    services:[{num:5,name:"Employer Partnership Planning"},{num:19,name:"Job Placement Assistance"}]
+  },
+  { num:14, title:"Post-Placement Support & Retention", phase:"launch", hasBook:false,
+    desc:"Focuses on what happens after placement. Addresses retention barriers, proactive follow-up, and data-informed risk identification.",
+    overview:"Week 14 focuses on what happens after placement. The week addresses retention barriers, proactive follow-up, employer collaboration, and data-informed risk identification. It reinforces a core curriculum theme: mobility is a longitudinal process, not a single event. Participants develop role-specific action plans, translating concepts into operational retention strategies.",
+    book:null,
+    activities:["Retention barrier analysis","Post-placement support model design","Role-specific action plan development","OA Guide: Post-Placement & TPM Framework application"],
+    competencies:["Retention & advancement strategy","Longitudinal support design","Data-informed risk identification"],
+    services:[{num:20,name:"Retention Services & Follow-Up"},{num:21,name:"Alumni Engagement"}]
+  },
+  { num:16, title:"Capstone Development", phase:"launch", hasBook:false,
+    desc:"Fellows apply all OA principles, tools, and curriculum concepts to real organizational challenges. Independent work begins with coaching support.",
+    overview:"Weeks 16 through 18 are dedicated to applying OA principles, tools, and curriculum concepts to real organizational challenges. Week 16 begins the capstone development process — fellows draw on all prior learning to define their organizational challenge, frame their approach, and begin building their solution. Coaching support is provided throughout.",
+    book:null,
+    activities:["Capstone challenge definition","OA framework application to real context","Independent project work","Coaching sessions with program faculty"],
+    competencies:["Applied synthesis","Strategic execution","Systems problem-solving"],
+    services:[{num:3,name:"OA Fellows Program"},{num:6,name:"Evaluating Impact & Metrics"}]
+  },
+  { num:17, title:"Capstone Refinement", phase:"launch", hasBook:false,
+    desc:"Fellows refine their capstone solutions through peer feedback, iteration, and integration of all curriculum learning.",
+    overview:"Week 17 is dedicated to capstone refinement. Fellows bring their work-in-progress to the cohort for structured peer feedback, then iterate based on what they hear. This week tests the integration of all prior learning — fellows must demonstrate that their solutions reflect the equity frameworks, diagnostic tools, and design principles built across the 18 weeks.",
+    book:null,
+    activities:["Peer feedback sessions on capstone drafts","Iteration and revision based on feedback","Integration check: equity, evidence, and design","Cohort reflection on collective learning"],
+    competencies:["Reflective practice","Peer learning and feedback","Solution iteration"],
+    services:[{num:3,name:"OA Fellows Program"},{num:6,name:"Evaluating Impact & Metrics"}]
+  },
+  { num:18, title:"Capstone Completion & Graduation", phase:"launch", hasBook:false,
+    desc:"Fellows finalize and present their capstone deliverables, demonstrating integrated competency across all 12 leadership domains.",
+    overview:"Week 18 closes the program with capstone completion, final presentations, and graduation. Fellows present their finalized solutions — demonstrating integrated competency across the 12 leadership domains developed throughout the program. Graduation includes structured reflection on how thinking has changed, what fellows are taking back to their organizations, and how they will continue applying OA principles in their roles.",
+    book:null,
+    activities:["Final capstone presentations","Demonstrated competency integration","Structured reflection on growth and change","Graduation and cohort celebration"],
+    competencies:["Demonstrated competency integration","Reflective leadership","Network contribution"],
+    services:[{num:3,name:"OA Fellows Program"},{num:6,name:"Evaluating Impact & Metrics"}]
+  }
+];
+
+const chapters = [
+  {num:"Ch. 1", title:"Introduction",                              sub:"Economic mobility as a systems challenge — structural forces, not individual failings, shape who benefits from growth",                              week:"Week 2"},
+  {num:"Ch. 2", title:"Start with People, Offer Meaningful Choices", sub:"Human-centered design grounded in brain science — poverty impairs decision-making capacity, not motivation",                                       week:"Week 4"},
+  {num:"Ch. 3", title:"Listen, Respond, Get Personal",              sub:"Moving from population-level understanding to individualized, relational, diagnostic service design",                                               week:"Week 5"},
+  {num:"Ch. 5", title:"Relevance Drives Persistence",               sub:"Adults persist when learning is contextualized and connected to real goals — foundational skills as strategic levers",                              week:"Week 9"},
+  {num:"Ch. 6", title:"Bridges to Employment",                      sub:"Work-based learning, apprenticeships, and social capital — how structured bridges produce mobility",                                                week:"Week 10"},
+  {num:"Ch. 7", title:"Skills as Currency",                         sub:"Skills-based hiring, stackable credentials, and why new tools can replicate inequity without intentional design",                                   week:"Week 11"},
+  {num:"Ch. 8", title:"Commit to Transparency",                     sub:"Evaluation as a moral and strategic responsibility — distinguishing outputs from outcomes, using data to learn",                                   week:"Week 12"}
+];
+
+const competencies = [
+  {icon:"◆", title:"Systems & Equity Thinking",           desc:"Fellows analyze structural barriers to economic mobility and frame programs as intentional, equity-driven responses to systemic conditions."},
+  {icon:"◆", title:"Evidence-Based Program Design",       desc:"Fellows design and evaluate programs using logic models, fidelity tools, and contextualized learning strategies that drive persistence and outcomes."},
+  {icon:"◆", title:"Person-Centered Assessment",          desc:"Fellows conduct individual and community-level assessments that are relational, diagnostic, and responsive to the real circumstances of participants."},
+  {icon:"◆", title:"Career Pathway Architecture",         desc:"Fellows sequence training, credentials, and work-based learning into coherent pathways that move participants into sustainable, advancing careers."},
+  {icon:"◆", title:"Employer & Community Engagement",     desc:"Fellows build demand-side partnerships with employers and community stakeholders that improve job quality and expand access to opportunity."},
+  {icon:"◆", title:"Strategic Evaluation & Accountability",desc:"Fellows distinguish outputs from outcomes, apply logic models, and use measurement as a tool for organizational learning, improvement, and trust."},
+  {icon:"◆", title:"OA Implementation Fidelity",          desc:"Fellows apply the OA Fidelity Index to assess implementation quality, identify gaps, and drive disciplined execution of the OA framework."},
+  {icon:"◆", title:"Adult Learning Strategy",             desc:"Fellows design foundational and occupational skills programs grounded in contextualized, relevant, and persistence-focused adult learning principles."},
+  {icon:"◆", title:"Wrap-Around Support Design",          desc:"Fellows identify and integrate stabilization supports — housing, transportation, childcare — as core components of workforce program design."},
+  {icon:"◆", title:"Change Management",                   desc:"Fellows navigate organizational resistance, build internal alignment, and lead the implementation of new practices with discipline and adaptability."},
+  {icon:"◆", title:"Skills-Based System Design",          desc:"Fellows design credential pathways, explore digital wallets and LERs, and evaluate how skills-based hiring systems can advance or undermine equity."},
+  {icon:"◆", title:"Post-Placement & Retention Strategy", desc:"Fellows develop longitudinal support strategies that address retention barriers, engage employers, and sustain participant advancement over time."}
+];
+
+// ═══════════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════════
+function phaseLabel(p) {
+  return p==='assess'?'Assess & Plan': p==='equip'?'Equip & Connect':'Launch & Evaluate';
+}
+
+function renderWeeks(filter) {
+  filter = filter || 'all';
+  var list = filter==='all' ? weeks : filter==='book' ? weeks.filter(function(w){return w.hasBook;}) : weeks.filter(function(w){return w.phase===filter;});
+  var html = '';
+  list.forEach(function(w) {
+    var sdaTags = (w.services||[]).map(function(s){return '<span class="tag tag-sda">SDA '+s.num+'</span>';}).join('');
+    html += '<div class="week-card'+(w.hasBook?' has-book':'')+'" onclick="openModal('+w.num+')">';
+    html += '<div class="wk-header"><div class="wk-num">WK '+String(w.num).padStart(2,'0')+'</div><div class="wk-title">'+w.title+'</div></div>';
+    html += '<div class="wk-body"><div class="wk-desc">'+w.desc+'</div>';
+    html += '<div class="wk-tags">';
+    if(w.hasBook) html += '<span class="tag tag-gf">Growing Fairly</span>';
+    html += '<span class="tag tag-phase">'+phaseLabel(w.phase)+'</span>';
+    if(w.num>=16) html += '<span class="tag tag-cap">Capstone</span>';
+    html += sdaTags;
+    html += '</div></div></div>';
+  });
+  document.getElementById('weeksGrid').innerHTML = html;
+}
+
+function filterWeeks(f, btn) {
+  document.querySelectorAll('.fbtn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  renderWeeks(f);
+}
+
+function renderChapters() {
+  var html = '';
+  chapters.forEach(function(c){
+    html += '<li class="ch-item"><div class="ch-num">'+c.num+'</div><div><div class="ch-title">'+c.title+'</div><div class="ch-sub">'+c.sub+'</div></div><div class="ch-week">'+c.week+'</div></li>';
+  });
+  document.getElementById('chapterList').innerHTML = html;
+}
+
+function renderCompetencies() {
+  var html = '';
+  competencies.forEach(function(c){
+    html += '<div class="comp-card"><div class="comp-icon">'+c.icon+'</div><div class="comp-title">'+c.title+'</div><div class="comp-desc">'+c.desc+'</div></div>';
+  });
+  document.getElementById('compGrid').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════
+//  MODAL
+// ═══════════════════════════════════════════════════
+function openModal(num) {
+  var w = weeks.find(function(x){return x.num===num;});
+  if(!w) return;
+  document.getElementById('modalWk').textContent = 'Week '+w.num;
+  document.getElementById('modalTitle').textContent = w.title;
+
+  var h = '';
+
+  if(w.book) {
+    h += '<div class="modal-book-banner">';
+    h += '<div class="modal-book-label">Growing Fairly Integration</div>';
+    h += '<div class="modal-book-title">'+w.book.chapter+': \u201c'+w.book.title+'\u201d</div>';
+    h += '<p class="modal-book-desc">'+w.book.desc+'</p>';
+    h += '</div>';
+  }
+
+  h += '<div class="modal-sec"><div class="modal-sec-label">Overview</div><p>'+w.overview+'</p></div>';
+
+  h += '<div class="modal-sec"><div class="modal-sec-label">Key Activities</div><ul class="modal-acts">';
+  w.activities.forEach(function(a){h+='<li>'+a+'</li>';});
+  h += '</ul></div>';
+
+  h += '<div class="modal-sec"><div class="modal-sec-label">Competencies Developed</div><div class="modal-comps">';
+  w.competencies.forEach(function(c){h+='<span class="comp-pill">'+c+'</span>';});
+  h += '</div></div>';
+
+  if(w.services && w.services.length) {
+    h += '<div class="modal-sda">';
+    h += '<div class="modal-sec-label">OA Key Service Delivery Areas</div>';
+    h += '<div class="sda-list">';
+    w.services.forEach(function(s){
+      h += '<div class="sda-row"><span class="sda-num">'+s.num+'</span><span class="sda-name">'+s.name+'</span></div>';
+    });
+    h += '</div></div>';
+  }
+
+  document.getElementById('modalBody').innerHTML = h;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalBg(e) {
+  if(e.target===document.getElementById('modalOverlay')) closeModal();
+}
+
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+
+// ═══════════════════════════════════════════════════
+//  NAV
+// ═══════════════════════════════════════════════════
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('ham').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('ham').classList.remove('open');
+}
+document.addEventListener('click', function(e){
+  var m = document.getElementById('mobileMenu');
+  var b = document.getElementById('ham');
+  if(m.classList.contains('open') && !m.contains(e.target) && !b.contains(e.target)) closeMenu();
+});
+
+// ═══════════════════════════════════════════════════
+//  SCROLL FADE
+// ═══════════════════════════════════════════════════
+var obs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('vis'); });
+},{threshold:0.08});
+document.querySelectorAll('.fade').forEach(function(el){obs.observe(el);});
+
+// ═══════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════
+renderWeeks('all');
+renderChapters();
+renderCompetencies();
+</script>
+</body>
+</html>
