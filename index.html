@@ -206,7 +206,47 @@ nav {
 .tag-cap  { background:rgba(25,79,144,0.08); color:var(--navy); border:1px solid rgba(25,79,144,0.18); }
 .tag-sda  { background:rgba(97,140,61,0.1); color:#3d6020; border:1px solid rgba(97,140,61,0.25); }
 
-/* ── BOOK SECTION ── */
+/* ── PREDICTIVE INDEX ── */
+.pi-intro-grid { display:grid; grid-template-columns:1.1fr 1fr; gap:56px; align-items:start; margin-bottom:56px; }
+.pi-drives { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:24px; }
+.pi-drive { background:var(--pale); border:1px solid rgba(25,79,144,0.12); border-top:3px solid var(--navy); padding:20px 16px; }
+.pi-drive-letter { font-size:2rem; font-weight:900; color:rgba(25,79,144,0.2); line-height:1; margin-bottom:6px; }
+.pi-drive-name { font-size:0.82rem; font-weight:700; color:var(--navy); margin-bottom:4px; }
+.pi-drive-desc { font-size:0.75rem; color:var(--gray); line-height:1.6; }
+.pi-flow-title { font-size:1rem; font-weight:700; color:var(--navy); margin-bottom:20px; }
+.pi-steps { display:flex; flex-direction:column; gap:0; }
+.pi-step { display:grid; grid-template-columns:44px 1fr; gap:16px; align-items:start; padding:18px 0; border-bottom:1px solid rgba(25,79,144,0.08); }
+.pi-step:last-child { border-bottom:none; }
+.pi-step-num { width:36px; height:36px; background:var(--navy); color:#fff; font-size:0.75rem; font-weight:800; font-family:'DM Mono',monospace; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
+.pi-step-title { font-size:0.9rem; font-weight:700; color:var(--navy); margin-bottom:4px; }
+.pi-step-desc { font-size:0.8rem; color:var(--gray); line-height:1.65; }
+.pi-step-badge { display:inline-block; font-size:0.6rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:2px 8px; margin-top:6px; background:rgba(73,197,205,0.12); color:#1a8f96; border:1px solid rgba(73,197,205,0.28); }
+.pi-callout { margin-top:28px; background:var(--navy); padding:28px 28px 28px 32px; position:relative; overflow:hidden; }
+.pi-callout::before { content:''; position:absolute; top:0; left:0; bottom:0; width:4px; background:var(--teal); }
+.pi-callout-label { font-family:'DM Mono',monospace; font-size:0.6rem; color:var(--teal); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:8px; }
+.pi-callout-heading { font-size:1.1rem; font-weight:800; color:#fff; margin-bottom:10px; line-height:1.3; }
+.pi-callout-desc { font-size:0.83rem; color:rgba(255,255,255,0.55); line-height:1.72; }
+.pi-workshops { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:8px; }
+.pi-workshop { background:var(--white); border:1px solid rgba(0,0,0,0.08); padding:30px 26px; position:relative; overflow:hidden; transition:all 0.25s; }
+.pi-workshop:hover { border-color:var(--navy); box-shadow:0 6px 24px rgba(25,79,144,0.1); transform:translateY(-2px); }
+.pi-workshop::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.pi-workshop.workshop-a::before { background:linear-gradient(90deg, var(--teal), var(--mid)); }
+.pi-workshop.workshop-b::before { background:linear-gradient(90deg, var(--red), #e06080); }
+.pi-ws-eyebrow { font-family:'DM Mono',monospace; font-size:0.59rem; color:var(--teal); letter-spacing:0.18em; text-transform:uppercase; margin-bottom:10px; }
+.pi-workshop.workshop-b .pi-ws-eyebrow { color:var(--red); }
+.pi-ws-title { font-size:1.05rem; font-weight:800; color:var(--navy); line-height:1.2; margin-bottom:12px; }
+.pi-ws-meta { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+.pi-ws-badge { font-size:0.62rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding:3px 9px; border:1px solid; }
+.badge-virtual { background:rgba(73,197,205,0.08); color:#1a8f96; border-color:rgba(73,197,205,0.3); }
+.badge-inperson { background:rgba(223,78,97,0.08); color:var(--red); border-color:rgba(223,78,97,0.3); }
+.badge-date { background:var(--pale); color:var(--navy); border-color:rgba(25,79,144,0.2); }
+.pi-ws-desc { font-size:0.82rem; color:var(--gray); line-height:1.72; margin-bottom:16px; }
+.pi-ws-objectives { list-style:none; border-top:1px solid rgba(0,0,0,0.06); padding-top:14px; }
+.pi-ws-objectives li { font-size:0.79rem; color:#444; padding:5px 0; border-bottom:1px solid rgba(0,0,0,0.04); display:flex; gap:9px; line-height:1.5; }
+.pi-ws-objectives li::before { content:'→'; color:var(--teal); flex-shrink:0; }
+.pi-workshop.workshop-b .pi-ws-objectives li::before { color:var(--red); }
+
+  /* ── BOOK SECTION ── */
 .book-grid { display:grid; grid-template-columns:1fr 1.5fr; gap:56px; align-items:start; margin-top:8px; position:relative; z-index:2; }
 .book-card { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); padding:32px 28px; position:relative; }
 .book-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--teal),var(--mid)); }
