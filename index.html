@@ -65,41 +65,44 @@ nav {
 /* ── HERO ── */
 .hero {
   background:var(--navy);
-  position:relative; 
-  padding: 80px 0;
+  position:relative;
   padding: clamp(40px, 8vw, 100px) 0;
   display:flex; align-items:center;
+  min-height:100svh;
 }
 .hero-bg {
   position:absolute; inset:0;
-  z-index: -1;
+  z-index:0;
   background:
     radial-gradient(ellipse 55% 70% at 80% 40%, rgba(73,197,205,0.15) 0%, transparent 65%),
     radial-gradient(ellipse 40% 50% at 10% 80%, rgba(223,78,97,0.08) 0%, transparent 60%);
+  pointer-events:none;
 }
 .hero-grid {
-  position:absolute; inset:0;
+  position:absolute; inset:0; z-index:0;
   background-image:
     linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
   background-size:64px 64px;
+  pointer-events:none;
 }
 .hero-content {
-  text-align: center;
+  text-align:center;
   margin:0 auto;
   position:relative; z-index:2;
   max-width:800px;
+  padding-top:80px;
 }
 .eyebrow {
   font-family:'DM Mono',monospace; font-size:0.68rem; color:var(--teal);
   letter-spacing:0.22em; text-transform:uppercase;
-  margin-bottom:22px; display:flex; align-items:center; gap:12px;
+  margin-bottom:22px; display:flex; align-items:center; justify-content:center; gap:12px;
 }
-.eyebrow::before { content:''; display:block; width:28px; height:1px; background:var(--teal); }
+.eyebrow::before { content:''; display:block; width:28px; height:1px; background:var(--teal); flex-shrink:0; }
 .hero-title { font-size:clamp(2.6rem,5.5vw,4.4rem); font-weight:900; color:#fff; line-height:1.05; margin-bottom:24px; }
 .hero-title em { font-style:normal; color:var(--teal); }
-.hero-sub { font-size:1.05rem; color:rgba(255,255,255,0.62); line-height:1.75; max-width:560px; margin-bottom:44px; font-weight:300; }
-.cta-row { display:flex; gap:14px; flex-wrap:wrap; }
+.hero-sub { font-size:1.05rem; color:rgba(255,255,255,0.62); line-height:1.75; max-width:560px; margin:0 auto 44px; font-weight:300; }
+.cta-row { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
 .btn-primary {
   background:var(--red); color:#fff; border:none;
   padding:13px 26px; font-family:'Work Sans',sans-serif;
@@ -246,7 +249,7 @@ nav {
 .pi-ws-objectives li::before { content:'→'; color:var(--teal); flex-shrink:0; }
 .pi-workshop.workshop-b .pi-ws-objectives li::before { color:var(--red); }
 
-  /* ── BOOK SECTION ── */
+/* ── BOOK SECTION ── */
 .book-grid { display:grid; grid-template-columns:1fr 1.5fr; gap:56px; align-items:start; margin-top:8px; position:relative; z-index:2; }
 .book-card { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); padding:32px 28px; position:relative; }
 .book-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--teal),var(--mid)); }
@@ -291,14 +294,14 @@ footer { background:#0c1c34; padding:56px 0 32px; }
 .footer-copy { font-size:0.74rem; color:rgba(255,255,255,0.22); }
 
 /* ── MODAL ── */
-.modal-overlay { display:none; position:fixed; inset:0; background:rgba(10,20,40,0.72); z-index:200; backdrop-filter:blur(4px); align-items:center; justify-content:center; padding:40px; }
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(10,20,40,0.72); z-index:200; backdrop-filter:blur(4px); align-items:center; justify-content:center; padding:40px; overflow-y:auto; }
 .modal-overlay.open { display:flex; }
-.modal { background:#fff; max-width:680px; width:100%; max-height:84vh; overflow-y:auto; animation:mIn 0.22s ease; }
+.modal { background:#fff; max-width:680px; width:100%; max-height:84vh; overflow-y:auto; animation:mIn 0.22s ease; -webkit-overflow-scrolling:touch; }
 @keyframes mIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
 .modal-hd { background:var(--navy); padding:26px 30px; position:sticky; top:0; z-index:1; }
 .modal-wk { font-family:'DM Mono',monospace; font-size:0.62rem; color:var(--teal); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:5px; }
 .modal-title { font-size:1.3rem; font-weight:800; color:#fff; line-height:1.2; }
-.modal-close { position:absolute; top:16px; right:20px; background:rgba(255,255,255,0.1); border:none; color:#fff; font-size:1rem; cursor:pointer; width:30px; height:30px; display:flex; align-items:center; justify-content:center; transition:background 0.2s; }
+.modal-close { position:absolute; top:16px; right:20px; background:rgba(255,255,255,0.1); border:none; color:#fff; font-size:1rem; cursor:pointer; width:36px; height:36px; display:flex; align-items:center; justify-content:center; transition:background 0.2s; min-width:36px; }
 .modal-close:hover { background:rgba(255,255,255,0.22); }
 .modal-body { padding:26px 30px; }
 .modal-sec { margin-bottom:22px; }
@@ -325,70 +328,117 @@ footer { background:#0c1c34; padding:56px 0 32px; }
 .fade.vis { opacity:1; transform:translateY(0); }
 
 /* ══════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE — TABLET (≤960px)
 ══════════════════════════════════════ */
-
-/* Tablet */
 @media (max-width:960px) {
   nav { padding:0 20px; }
   .nav-links { display:none; }
   .hamburger { display:flex; }
-  .hero-content { padding:110px 32px 60px; }
+
   .container { padding:0 24px; }
   .section-light, .section-cream, .section-navy { padding:64px 0; }
+
+  .hero-content { padding-top:80px; }
+
   .problem-grid { grid-template-columns:1fr; gap:32px; }
   .numbers-grid { grid-template-columns:1fr; gap:40px; }
-  .goals-grid { grid-template-columns:1fr; gap:2px; }
+  .goals-grid { grid-template-columns:1fr 1fr; }
   .phases { grid-template-columns:1fr; }
   .weeks-grid { grid-template-columns:1fr 1fr; gap:10px; }
+
+  /* PI section */
+  .pi-intro-grid { grid-template-columns:1fr; gap:36px; }
+  .pi-drives { grid-template-columns:1fr 1fr; }
+  .pi-workshops { grid-template-columns:1fr; }
+
+  /* Book */
   .book-grid { grid-template-columns:1fr; gap:32px; }
+  .ch-week { display:none; }
+  .ch-item { grid-template-columns:44px 1fr; }
+
   .comp-grid { grid-template-columns:1fr 1fr; gap:10px; }
   .footer-grid { grid-template-columns:1fr; gap:32px; }
+
   .modal-overlay { padding:20px; }
-  .ch-week { display:none; }
 }
 
-/* Mobile */
+/* ══════════════════════════════════════
+   RESPONSIVE — MOBILE (≤600px)
+══════════════════════════════════════ */
 @media (max-width:600px) {
   nav { padding:0 16px; }
-  .hero-content { padding:90px 20px 48px; }
+
+  .hero { min-height:auto; padding:0; }
+  .hero-content { padding:96px 20px 52px; }
   .hero-title { font-size:2.4rem; }
   .hero-sub { font-size:0.95rem; }
   .cta-row { flex-direction:column; gap:10px; }
   .btn-primary, .btn-ghost { width:100%; text-align:center; }
+
   .container { padding:0 16px; }
   .section-light, .section-cream, .section-navy { padding:52px 0; }
   .sec-title { font-size:1.7rem; }
   .pull-quote { font-size:1.05rem; }
+
   .nstats { grid-template-columns:1fr 1fr; }
   .nstat-num { font-size:2rem; }
   .nstat { padding:16px 14px; }
   .col-head { font-size:1.15rem; }
   .date-row { grid-template-columns:62px 1fr; gap:10px; }
-  .goals-grid { gap:2px; }
+
+  .goals-grid { grid-template-columns:1fr; gap:2px; }
   .goal-card { padding:26px 22px; }
   .goal-letter { font-size:2.4rem; }
+
   .phase { padding:26px 20px; }
+
   .weeks-grid { grid-template-columns:1fr; }
   .week-filters { gap:5px; }
   .fbtn { font-size:0.68rem; padding:6px 10px; }
+
+  /* PI */
+  .pi-drives { grid-template-columns:1fr 1fr; }
+  .pi-step { grid-template-columns:36px 1fr; gap:12px; }
+  .pi-step-num { width:30px; height:30px; font-size:0.68rem; }
+
   .comp-grid { grid-template-columns:1fr; }
   .comp-card { padding:22px 18px; }
+
   .book-card { padding:26px 22px; }
   .book-title { font-size:1.4rem; }
+
   .footer-bottom { flex-direction:column; text-align:center; gap:4px; }
-  .modal-overlay { padding:0; align-items:flex-end; }
-  .modal { max-height:90vh; max-width:100%; }
-  .modal-hd { padding:20px; }
+
+  /* Modal — bottom sheet on mobile */
+  .modal-overlay { padding:0; align-items:flex-end; overflow:hidden; }
+  .modal { max-height:90vh; max-width:100%; border-radius:0; animation:mInMobile 0.25s ease; }
+  @keyframes mInMobile { from{transform:translateY(100%)} to{transform:translateY(0)} }
+  .modal-hd { padding:20px 20px 16px; }
+  .modal-title { font-size:1.1rem; }
   .modal-body { padding:20px; }
   .modal-sda { margin:0 -20px -20px; padding:16px; }
 }
 
-/* Small phones */
+/* ══════════════════════════════════════
+   RESPONSIVE — SMALL PHONES (≤380px)
+══════════════════════════════════════ */
 @media (max-width:380px) {
   .hero-title { font-size:2rem; }
   .nstats { grid-template-columns:1fr; }
   .nstat-num { font-size:1.8rem; }
+  .pi-drives { grid-template-columns:1fr; }
+  .goals-grid { grid-template-columns:1fr; }
+}
+
+/* Touch: remove hover lift to prevent stuck states */
+@media (hover:none) {
+  .week-card:hover,
+  .phase:hover,
+  .comp-card:hover,
+  .goal-card:hover,
+  .pi-workshop:hover { transform:none; box-shadow:none; }
+  .week-card:active { border-color:var(--navy); }
+  .comp-card:active::after { transform:scaleX(1); }
 }
 </style>
 </head>
@@ -427,16 +477,15 @@ footer { background:#0c1c34; padding:56px 0 32px; }
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="container">
-  <div class="hero-content">
-    <h1 class="hero-title">Opportunity<br>Accelerator®<br><em>Fellows</em></h1>
-    <p class="hero-sub">An 18-week cohort-based leadership program building the systems thinkers, equity designers, and disciplined executors that equitable workforce development requires.</p>
-    <div class="cta-row">
-      <a href="#curriculum" class="btn-primary">Explore the Curriculum</a>
-      <a href="#weeks"      class="btn-ghost">Week by Week</a>
+    <div class="hero-content">
+      <h1 class="hero-title">Opportunity<br>Accelerator®<br><em>Fellows</em></h1>
+      <p class="hero-sub">An 18-week cohort-based leadership program building the systems thinkers, equity designers, and disciplined executors that equitable workforce development requires.</p>
+      <div class="cta-row">
+        <a href="#curriculum" class="btn-primary">Explore the Curriculum</a>
+        <a href="#weeks"      class="btn-ghost">Week by Week</a>
+      </div>
     </div>
   </div>
-  </div>
-</div>
 </section>
 
 <!-- OVERVIEW / PROBLEM -->
@@ -613,7 +662,7 @@ footer { background:#0c1c34; padding:56px 0 32px; }
     <div class="weeks-grid" id="weeksGrid"></div>
   </div>
 </section>
-  
+
 <!-- PREDICTIVE INDEX -->
 <section class="section-cream" id="predictive-index">
   <div class="container fade">
@@ -640,7 +689,7 @@ footer { background:#0c1c34; padding:56px 0 32px; }
             <div class="pi-step-num">02</div>
             <div>
               <div class="pi-step-title">Workshop A — "Who Am I?"</div>
-              <div class="pi-step-desc">Fellows unpack their individual profiles in a virtual workshop, exploring strengths, caution areas, and leadership style. Personal development action plans are created.</div>              
+              <div class="pi-step-desc">Fellows unpack their individual profiles in a virtual workshop, exploring strengths, caution areas, and leadership style. Personal development action plans are created.</div>
             </div>
           </div>
           <div class="pi-step">
@@ -694,6 +743,7 @@ footer { background:#0c1c34; padding:56px 0 32px; }
         </div>
       </div>
     </div>
+  </div>
 </section>
 
 <!-- GROWING FAIRLY -->
@@ -756,6 +806,9 @@ footer { background:#0c1c34; padding:56px 0 32px; }
           <li><a href="#competencies">Fellow Competencies</a></li>
         </ul>
       </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© Goodwill Industries International · OA Fellows Curriculum</span>
     </div>
   </div>
 </footer>
@@ -916,28 +969,28 @@ const weeks = [
 ];
 
 const chapters = [
-  {num:"Ch. 1", title:"Introduction",                              sub:"Economic mobility as a systems challenge — structural forces, not individual failings, shape who benefits from growth",                              week:"Week 2"},
+  {num:"Ch. 1", title:"Introduction",                               sub:"Economic mobility as a systems challenge — structural forces, not individual failings, shape who benefits from growth",                              week:"Week 2"},
   {num:"Ch. 2", title:"Start with People, Offer Meaningful Choices", sub:"Human-centered design grounded in brain science — poverty impairs decision-making capacity, not motivation",                                       week:"Week 4"},
-  {num:"Ch. 3", title:"Listen, Respond, Get Personal",              sub:"Moving from population-level understanding to individualized, relational, diagnostic service design",                                               week:"Week 5"},
-  {num:"Ch. 5", title:"Relevance Drives Persistence",               sub:"Adults persist when learning is contextualized and connected to real goals — foundational skills as strategic levers",                              week:"Week 9"},
-  {num:"Ch. 6", title:"Bridges to Employment",                      sub:"Work-based learning, apprenticeships, and social capital — how structured bridges produce mobility",                                                week:"Week 10"},
-  {num:"Ch. 7", title:"Skills as Currency",                         sub:"Skills-based hiring, stackable credentials, and why new tools can replicate inequity without intentional design",                                   week:"Week 11"},
-  {num:"Ch. 8", title:"Commit to Transparency",                     sub:"Evaluation as a moral and strategic responsibility — distinguishing outputs from outcomes, using data to learn",                                   week:"Week 12"}
+  {num:"Ch. 3", title:"Listen, Respond, Get Personal",               sub:"Moving from population-level understanding to individualized, relational, diagnostic service design",                                               week:"Week 5"},
+  {num:"Ch. 5", title:"Relevance Drives Persistence",                sub:"Adults persist when learning is contextualized and connected to real goals — foundational skills as strategic levers",                              week:"Week 9"},
+  {num:"Ch. 6", title:"Bridges to Employment",                       sub:"Work-based learning, apprenticeships, and social capital — how structured bridges produce mobility",                                                week:"Week 10"},
+  {num:"Ch. 7", title:"Skills as Currency",                          sub:"Skills-based hiring, stackable credentials, and why new tools can replicate inequity without intentional design",                                   week:"Week 11"},
+  {num:"Ch. 8", title:"Commit to Transparency",                      sub:"Evaluation as a moral and strategic responsibility — distinguishing outputs from outcomes, using data to learn",                                   week:"Week 12"}
 ];
 
 const competencies = [
-  {icon:"◆", title:"Systems & Equity Thinking",           desc:"Fellows analyze structural barriers to economic mobility and frame programs as intentional, equity-driven responses to systemic conditions."},
-  {icon:"◆", title:"Evidence-Based Program Design",       desc:"Fellows design and evaluate programs using logic models, fidelity tools, and contextualized learning strategies that drive persistence and outcomes."},
-  {icon:"◆", title:"Person-Centered Assessment",          desc:"Fellows conduct individual and community-level assessments that are relational, diagnostic, and responsive to the real circumstances of participants."},
-  {icon:"◆", title:"Career Pathway Architecture",         desc:"Fellows sequence training, credentials, and work-based learning into coherent pathways that move participants into sustainable, advancing careers."},
-  {icon:"◆", title:"Employer & Community Engagement",     desc:"Fellows build demand-side partnerships with employers and community stakeholders that improve job quality and expand access to opportunity."},
+  {icon:"◆", title:"Systems & Equity Thinking",            desc:"Fellows analyze structural barriers to economic mobility and frame programs as intentional, equity-driven responses to systemic conditions."},
+  {icon:"◆", title:"Evidence-Based Program Design",        desc:"Fellows design and evaluate programs using logic models, fidelity tools, and contextualized learning strategies that drive persistence and outcomes."},
+  {icon:"◆", title:"Person-Centered Assessment",           desc:"Fellows conduct individual and community-level assessments that are relational, diagnostic, and responsive to the real circumstances of participants."},
+  {icon:"◆", title:"Career Pathway Architecture",          desc:"Fellows sequence training, credentials, and work-based learning into coherent pathways that move participants into sustainable, advancing careers."},
+  {icon:"◆", title:"Employer & Community Engagement",      desc:"Fellows build demand-side partnerships with employers and community stakeholders that improve job quality and expand access to opportunity."},
   {icon:"◆", title:"Strategic Evaluation & Accountability",desc:"Fellows distinguish outputs from outcomes, apply logic models, and use measurement as a tool for organizational learning, improvement, and trust."},
-  {icon:"◆", title:"OA Implementation Fidelity",          desc:"Fellows apply the OA Fidelity Index to assess implementation quality, identify gaps, and drive disciplined execution of the OA framework."},
-  {icon:"◆", title:"Adult Learning Strategy",             desc:"Fellows design foundational and occupational skills programs grounded in contextualized, relevant, and persistence-focused adult learning principles."},
-  {icon:"◆", title:"Wrap-Around Support Design",          desc:"Fellows identify and integrate stabilization supports — housing, transportation, childcare — as core components of workforce program design."},
-  {icon:"◆", title:"Change Management",                   desc:"Fellows navigate organizational resistance, build internal alignment, and lead the implementation of new practices with discipline and adaptability."},
-  {icon:"◆", title:"Skills-Based System Design",          desc:"Fellows design credential pathways, explore digital wallets and LERs, and evaluate how skills-based hiring systems can advance or undermine equity."},
-  {icon:"◆", title:"Post-Placement & Retention Strategy", desc:"Fellows develop longitudinal support strategies that address retention barriers, engage employers, and sustain participant advancement over time."}
+  {icon:"◆", title:"OA Implementation Fidelity",           desc:"Fellows apply the OA Fidelity Index to assess implementation quality, identify gaps, and drive disciplined execution of the OA framework."},
+  {icon:"◆", title:"Adult Learning Strategy",              desc:"Fellows design foundational and occupational skills programs grounded in contextualized, relevant, and persistence-focused adult learning principles."},
+  {icon:"◆", title:"Wrap-Around Support Design",           desc:"Fellows identify and integrate stabilization supports — housing, transportation, childcare — as core components of workforce program design."},
+  {icon:"◆", title:"Change Management",                    desc:"Fellows navigate organizational resistance, build internal alignment, and lead the implementation of new practices with discipline and adaptability."},
+  {icon:"◆", title:"Skills-Based System Design",           desc:"Fellows design credential pathways, explore digital wallets and LERs, and evaluate how skills-based hiring systems can advance or undermine equity."},
+  {icon:"◆", title:"Post-Placement & Retention Strategy",  desc:"Fellows develop longitudinal support strategies that address retention barriers, engage employers, and sustain participant advancement over time."}
 ];
 
 // ═══════════════════════════════════════════════════
